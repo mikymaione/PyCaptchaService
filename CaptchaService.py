@@ -42,7 +42,11 @@ def generate_captcha():
 
 @app.post("/validate/")
 def validate_captcha(answer: Answer):
-    correct = answer.answer == generated[answer.guid]
+    if answer.guid in generated:
+        correct = answer.answer == generated[answer.guid]
+    else:
+        correct = False
+
     return {"Correct": correct}
 
 
